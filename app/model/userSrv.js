@@ -15,7 +15,7 @@ app.factory("userSrv", function($http, $q, $log) {
         $http.get("http://localhost:56381/api/users").then(function(response) {
             var users = response.data;
             for (var i = 0; i < users.length; i++) {
-                if (users[i].name === name && users[i].pwd === pwd) {
+                if (users[i].name === name && users[i].password === pwd) {
                     activeUser = new User(users[i]);
                     async.resolve(activeUser);
 
