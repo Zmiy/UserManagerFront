@@ -8,21 +8,26 @@ app.controller("currentuserCtrl",function($scope, hotelsSrv, $location, $log, $r
     var hotelsByUserId = [];
 
     hotelsSrv.getHotelsByUser($scope.userId).then(function(hotelsByUserId){
-        $scope.hotelsByUserId = hotelsByUserId;
+        hotelsByUserId = hotelsByUserId;
         hotelsSrv.getHotels().then(function(hotels){
-            $scope.hotelsList = hotels;
-            // $scope.hotels = hotelsList.filter((el)=>{
-            //     return hotelsByUserId.map((hbuEl)=>{hbuEl.hotelId === el.hotelId 
-            //         && hbuEl.userId ===$scope.userId});    
-            for (var i=0;i<hotelsList.length;i++)
-            {
-                for (var j=0; j<hotelsByUserId.length;j++)
-                {
-                    if (hotelsByUserId[j].hotelId === hotelsList[i].id && hotelsByUserId.userId === $scope.userId){
-                        $scope.hotels.push(hotelsList[i])
-                    }
-                }
-            }
+            hotelsList = hotels;
+            $scope.hotels = hotelsList.filter((el)=>{
+                   for (var i=0;i<hotelsByUserId.length; i++)
+                   {
+                       if (hotelsByUserId[i].hotelId === el.id )
+                        return true;
+                   }
+                // return hotelsByUserId.map((hbuEl)=>{hbuEl.hotelId === el.hotelId 
+                //     && hbuEl.userId ===$scope.userId});    
+            // for (var i=0;i<hotelsList.length;i++)
+            // {
+            //     for (var j=0; j<hotelsByUserId.length;j++)
+            //     {
+            //         if (hotelsByUserId[j].hotelId === hotelsList[i].id && hotelsByUserId.userId === $scope.userId){
+            //             $scope.hotels.push(hotelsList[i])
+            //         }
+            //     }
+            // }
         },(err)=>{
             $log(err);
         });
