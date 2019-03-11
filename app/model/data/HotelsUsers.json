@@ -1,0 +1,14 @@
+[
+	{
+		"hotelId":1,
+		"userId":4	
+	},
+	{
+		"hotelId": 3,
+		"userId": 4
+	},
+	{
+		"hotelId": 4,
+		"userId": 3
+	}	
+]

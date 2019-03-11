@@ -9,13 +9,14 @@ app.factory("userSrv", function($http, $q, $log) {
         this.role = plainUser.role;
     }
 
-    function login(name, pwd) {
+    function login(email, pwd) {
         var async = $q.defer();
 
-        $http.get("http://localhost:56381/api/users").then(function(response) {
+        // $http.get("http://localhost:56381/api/users").then(function(response) {
+        $http.get("app/model/data/users.json").then(function(response) {    
             var users = response.data;
             for (var i = 0; i < users.length; i++) {
-                if (users[i].name === name && users[i].password === pwd) {
+                if (users[i].email ===email && users[i].password === pwd) {
                     activeUser = new User(users[i]);
                     async.resolve(activeUser);
 

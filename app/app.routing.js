@@ -10,7 +10,8 @@ app.config(function($routeProvider){
     }).when('/user/:role',{
 
     }).when("/currentuser/:id",{
-
+        templateUrl: "app/users/currentuser.html",
+        controller: "currentuserCtrl"
     }).when("/currentTech/:id",{
 
     }).otherwise({

@@ -1,0 +1,9 @@
+<div class="container">
+    
+    <div class="form-group col-sm-2 my-2">
+      <label for="hotel"></label>
+      <select class="form-control" name="selectedHotel" id="selectedHotel" ng-model="selectedHotelId">
+           <option ng-repeat="hotel in hotels" value={{hotel.id}}>{{hotel.name}}</option>
+      </select>
+    </div>
+</div>
