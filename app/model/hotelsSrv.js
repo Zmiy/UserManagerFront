@@ -50,10 +50,12 @@ app.factory("hotelsSrv", function ($http, $q, $log, userSrv) {
         //     return hu.map((huItem) => { huItem.hotelId === hotel.Id && huItem.userId === id })
        return async.promise;
     }
-
+    function getBillingInfoByHotelId()
 
     return {
         getHotelsByUser: getHotelsByUser,
-        getHotels: getHotels
+        getHotels: getHotels,
+        getBillingInfoByHotelId: getBillingInfoByHotelId
+
     }
 });

@@ -1,17 +1,34 @@
+<usermanagment-navbar></usermanagment-navbar>
 <div class="container">
-    
-    <div class="form-group col-sm-2 my-2">
-      <label for="hotel">Hotels</label>
-      <select class="form-control" name="selectedHotel" id="selectedHotel" ng-model="selectedHotelId">
-           <option ng-repeat="hotel in hotels" value={{hotel.id}}>{{hotel.name}}</option>
-      </select>
-    </div>
-    <div class="form-group col-lg-2 my-2">
-      <label for="">Year</label>
-      <select class="form-control" name="year" id="year" ng-model=year>
-        <option selected value=2019>2019</option>
-        <option value=2018>2018</option>
-        <option value=2017>2017</option>
-      </select>
-    </div>
+    <div class="row">
+        <div class="form-group col-lg-3 my-2">
+            <label for="hotel">Hotels</label>
+            <select class="form-control-inline" name="selectedHotel" id="selectedHotel" ng-model="selectedHotelId">
+                <option ng-repeat="hotel in hotels" value={{hotel.id}}>{{hotel.name}}</option>
+            </select>
+        </div>
+        <div class="form-group col-lg-2 my-2">
+            <label for="">Year</label>
+            <select class="form-control-inline" name="year" id="year" ng-model="selectedYear">
+                <option selected="selected" value=2019>2019</option>
+                <option value=2018>2018</option>
+                <option value=2017>2017</option>
+            </select>
+        </div>
+        <div class="form-group col-lg-2 my-2">
+            <label for="">Month</label>
+            <select class="form-control-inline" name="month" id="month" ng-model=selectedMonth>
+                <option ng-repeat="month in months" ng-selected="month==='March'" value={{month}}>{{month}}</option>
+
+            </select>
+
+        </div>
+        <div class="form-group col-lg-2 my-2">
+            <button type="button" name="" id="" class="btn btn-sm" ng-click="ShowBills()">Show</button>
+            
+        </div>
+        
+        <!-- <input type="month" /> -->
+    </div> <!--row-->
+    <div 
 </div>
