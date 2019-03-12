@@ -9,6 +9,13 @@ app.factory("hotelsSrv", function ($http, $q, $log, userSrv) {
         this.userId = hoteluser.userId;
     }
 
+    function Billing(parseBilling)
+    {
+        this.ourside = parseBilling.homibills;
+        this.hotelside = parseBilling.hotellbills;
+        this.date = moment(parseBilling.date);  
+    }
+
     var hotelsbyId = {};
     var hotels = [];
     function getHotelsByUser(id) {
@@ -50,7 +57,23 @@ app.factory("hotelsSrv", function ($http, $q, $log, userSrv) {
         //     return hu.map((huItem) => { huItem.hotelId === hotel.Id && huItem.userId === id })
        return async.promise;
     }
-    function getBillingInfoByHotelId()
+    var billingInfo = []
+    function getBillingInfoByHotelId(hotelId,year,month)
+    {
+        var async = $q.defer();
+        $http.get("app/model/data/billing.json").then((response) => {
+            jsonData = response.data;
+            //var firstDay = moment(year+" "+month, 'YYYY MMM', 'en');
+            jsonData.filter((element)=>{ return element.hotelId === hotelId})
+            .forEach((el)=>{billingInfo.push(new Billing(el))});
+            //billingInfo.forEach(el=>{console.log(el.date.format("MMMM","en") )})
+            async.resolve(billingInfo.filter((el)=>{return el.date.format("MMMM","en")===month}));
+        }, (error)=>{
+            $log.error("Error with Billing: " + error);
+            async.reject(error);
+        });
+        return async.promise;
+    }
 
     return {
         getHotelsByUser: getHotelsByUser,

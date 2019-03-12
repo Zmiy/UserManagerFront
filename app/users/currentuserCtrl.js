@@ -1,53 +1,52 @@
 //import moment = require("moment");
 
-app.controller("currentuserCtrl",function($scope, hotelsSrv, $location, $log, $routeParams){
+app.controller("currentuserCtrl", function ($scope, hotelsSrv, $location, $log, $routeParams) {
     $scope.selectedhotelId = "";
     var id = $routeParams["id"];
-    if(id!=='undefined'){
-        $scope.userId=id;
+    if (id !== 'undefined') {
+        $scope.userId = id;
     }
     var hotelsList = [];
-    var hotelsByUserId = [];
+    var hotelsByUserIdList = [];
     $scope.months = moment.months()
-    // $scope.isCurrentMonth(month)
-    // {
-    //     var now =moment();
-    //     if (now.month() === month)
-    //         return true;
-    //     return false;    
-    // }
 
-
-    hotelsSrv.getHotelsByUser($scope.userId).then(function(hotelsByUserId){
-        hotelsByUserId = hotelsByUserId;
-        hotelsSrv.getHotels().then(function(hotels){
+    hotelsSrv.getHotelsByUser($scope.userId).then(function (hotelsByUserId) {
+        hotelsByUserIdList = hotelsByUserId;
+        hotelsSrv.getHotels().then(function (hotels) {
             hotelsList = hotels;
-            $scope.hotels = hotelsList.filter((el)=>{
-                   for (var i=0;i<hotelsByUserId.length; i++)
-                   {
-                       if (hotelsByUserId[i].hotelId === el.id )
+            $scope.hotels = hotelsList.filter((el) => {
+                for (var i = 0; i < hotelsByUserIdList.length; i++) {
+                    if (hotelsByUserId[i].hotelId === el.id)
                         return true;
-                   }
-                // return hotelsByUserId.map((hbuEl)=>{hbuEl.hotelId === el.hotelId 
-                //     && hbuEl.userId ===$scope.userId});    
-            // for (var i=0;i<hotelsList.length;i++)
-            // {
-            //     for (var j=0; j<hotelsByUserId.length;j++)
-            //     {
-            //         if (hotelsByUserId[j].hotelId === hotelsList[i].id && hotelsByUserId.userId === $scope.userId){
-            //             $scope.hotels.push(hotelsList[i])
-            //         }
-            //     }
-            // }
-        },(err)=>{
-            $log(err);
+                }
+
+            });
+
+
+        }, (err) => {
+            $log.error(err);
         });
-        
-        
-    },(err)=>{
-        $log(err);
+
+    }, (err) => {
+        $log.error(err);
     });
     
-    
-    })
+    $scope.billingInfo = [];
+
+    $scope.showBills = function(){
+        hotelsSrv.getBillingInfoByHotelId(parseInt($scope.selectedHotelId), $scope.selectedYear, $scope.selectedMonth).then(function(billingInfo){
+            $scope.billingInfo = billingInfo;
+        },function (err){
+         $log.error(err)
+        });
+    }
+
+    // $scope.getDogPicture=function(dog){
+    //     dogsServices.getDogPicture(dog).then(function(picUrl){
+    //          dog.image=picUrl;
+    //     },function(err){
+    //      $log.error(err)
+    //     })
+    //} 
+ 
 });

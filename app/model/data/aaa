@@ -1,10 +1,4 @@
-[
-	{
-		"hotelId":1,
-		"date" :"2019-02-20",
-		"homibills":3800,
-		"hotellbills":3800
-	},	
+,	
 	{
 		"hotelId":1,
 		"date" :"2019-03-01",
@@ -20,7 +14,7 @@
 	},	
 	{
 		"hotelId":3,
-		"date" :"2019-03-01",
+		"date" "2019-03-01":,
 		"homibills": 200,
 		"hotellbills": 200
 	},	
@@ -56,15 +50,13 @@
 	},	
 	{
 		"hotelId":1,
-		"date" :"2019-03-05",
+		"date" :"2019-03-04",
 		"homibills":100,
 		"hotellbills": 100
 	},	
 	{
 		"hotelId":1,
-		"date" :"2019-03-06",
+		"date" :"2019-03-05",
 		"homibills":2000,
 		"hotellbills":2000
-	}
-
-]
+	}	
