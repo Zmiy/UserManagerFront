@@ -13,7 +13,7 @@ app.factory("hotelsSrv", function ($http, $q, $log, userSrv) {
     {
         this.ourside = parseBilling.homibills;
         this.hotelside = parseBilling.hotellbills;
-        this.date = moment(parseBilling.date);  
+        this.billdate = moment(parseBilling.date);  
     }
 
     var hotelsbyId = {};
@@ -57,17 +57,18 @@ app.factory("hotelsSrv", function ($http, $q, $log, userSrv) {
         //     return hu.map((huItem) => { huItem.hotelId === hotel.Id && huItem.userId === id })
        return async.promise;
     }
-    var billingInfo = []
+    
     function getBillingInfoByHotelId(hotelId,year,month)
     {
         var async = $q.defer();
         $http.get("app/model/data/billing.json").then((response) => {
             jsonData = response.data;
+            var billingInfo = [];
             //var firstDay = moment(year+" "+month, 'YYYY MMM', 'en');
             jsonData.filter((element)=>{ return element.hotelId === hotelId})
             .forEach((el)=>{billingInfo.push(new Billing(el))});
             //billingInfo.forEach(el=>{console.log(el.date.format("MMMM","en") )})
-            async.resolve(billingInfo.filter((el)=>{return el.date.format("MMMM","en")===month}));
+            async.resolve(billingInfo.filter((el)=>{return el.billdate.format("MMMM","en")===month}));
         }, (error)=>{
             $log.error("Error with Billing: " + error);
             async.reject(error);

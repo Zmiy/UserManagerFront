@@ -9,6 +9,9 @@ app.controller("currentuserCtrl", function ($scope, hotelsSrv, $location, $log, 
     var hotelsList = [];
     var hotelsByUserIdList = [];
     $scope.months = moment.months()
+    
+    $scope.selectedMonth = moment().format("MMMM","en");
+    $scope.selectedYear = moment().format("YYYY","en");
 
     hotelsSrv.getHotelsByUser($scope.userId).then(function (hotelsByUserId) {
         hotelsByUserIdList = hotelsByUserId;
@@ -21,8 +24,6 @@ app.controller("currentuserCtrl", function ($scope, hotelsSrv, $location, $log, 
                 }
 
             });
-
-
         }, (err) => {
             $log.error(err);
         });
@@ -40,7 +41,10 @@ app.controller("currentuserCtrl", function ($scope, hotelsSrv, $location, $log, 
          $log.error(err)
         });
     }
-
+    $scope.add=function(){
+        var newDate = $scope.billingInfo[$scope.billingInfo.length-1].billdate.clone().add(1,"d");
+        $scope.billingInfo.push({"billdate":newDate,"hotelId":$scope.selectedHotelId,"homibilling":0,"hotelbilling":0});
+    }
     // $scope.getDogPicture=function(dog){
     //     dogsServices.getDogPicture(dog).then(function(picUrl){
     //          dog.image=picUrl;
