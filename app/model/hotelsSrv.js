@@ -14,6 +14,7 @@ app.factory("hotelsSrv", function ($http, $q, $log, userSrv) {
         this.ourside = parseBilling.homibills;
         this.hotelside = parseBilling.hotellbills;
         this.billdate = moment(parseBilling.date);  
+        this.status=parseBilling.status?parseBilling.status:"";
     }
 
     var hotelsbyId = {};

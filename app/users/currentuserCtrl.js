@@ -43,7 +43,22 @@ app.controller("currentuserCtrl", function ($scope, hotelsSrv, $location, $log, 
     }
     $scope.add=function(){
         var newDate = $scope.billingInfo[$scope.billingInfo.length-1].billdate.clone().add(1,"d");
-        $scope.billingInfo.push({"billdate":newDate,"hotelId":$scope.selectedHotelId,"homibilling":0,"hotelbilling":0});
+        $scope.billingInfo.push(
+                {"billdate":newDate,"hotelId":$scope.selectedHotelId,"homibilling":0,"hotelbilling":0, "status":"New"}
+            );
+        $scope.billingInfo.forEach((el)=>{console.log(el.billdate.format("LLL","he"))});    
+        console.log("new date:"+newDate.format("LLL"));
+    }
+
+    $scope.changeStatus = function(dayBilling){
+        if(dayBilling.status === "")
+        {
+            dayBilling.status="*";
+        }
+    }
+    
+    $scope.needSave =function() {
+        return $scope.billingInfo.some((el)=>{return el.status!==""});
     }
     // $scope.getDogPicture=function(dog){
     //     dogsServices.getDogPicture(dog).then(function(picUrl){
