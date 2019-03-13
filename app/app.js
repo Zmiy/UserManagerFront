@@ -1,1 +1,1 @@
-var app = angular.module("userManagement",["ngRoute"]);
+var app = angular.module("userManagement",["ngRoute","ui.bootstrap"]);
