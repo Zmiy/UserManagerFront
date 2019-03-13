@@ -1,77 +1,83 @@
 <usermanagment-navbar></usermanagment-navbar>
 <div class="container">
-    <div class="row">
-        <div class="form-group col-lg-3 my-2">
-            <label for="hotel">Hotels</label>
-            <select class="form-control-inline" name="selectedHotel" id="selectedHotel" ng-model="selectedHotelId"
-                ng-change="showBills()">
-                <option ng-repeat="hotel in hotels" value={{hotel.id}}>{{hotel.name}}</option>
-            </select>
-        </div>
-        <div class="form-group col-lg-2 my-2">
-            <label for="">Year</label>
-            <select class="form-control-inline" name="year" id="year" ng-model="selectedYear">
-                <option selected value=2019>2019</option>
-                <option value=2018>2018</option>
-                <option value=2017>2017</option>
-            </select>
-        </div>
-        <div class="form-group col-lg-2 my-2">
-            <label for="">Month</label>
-            <select class="form-control-inline" name="month" id="month" ng-model=selectedMonth>
-                <option ng-repeat="month in months" ng-selected="month === 'March'" value={{month}}>{{month}}</option>
-
-            </select>
-
-        </div>
-        <div class="form-group col-lg-2 my-2">
-            <button type="button" name="btnShow" id="btnShow" class="btn btn-sm align-middle"
-                ng-click="showBills();">Show!</button>
-
-        </div>
-
-        <!-- <input type="month" /> -->
-    </div>
-    <!--row-->
-    <!-- <div class="row"> -->
-    <ul ng-show="selectedHotelId">
-        <li class="row">
-            <div class="form-group col-lg-2">
-                <label for="">Date</label>
+    <h1>User:{{activeUser?activeUser.name:"undefine"}}</h1>
+    <!-- <uib-accordion> -->
+        <!-- <div uib-accordion-group class="mt-1" heading="Billing info" > -->
+            <div class="row">
+                <div class="form-group col-lg-3 my-2">
+                    <label for="hotel">Hotels</label>
+                    <select class="form-control-inline" name="selectedHotel" id="selectedHotel" ng-model="selectedHotelId"
+                        ng-change="showBills()">
+                        <option ng-repeat="hotel in hotels" value={{hotel.id}}>{{hotel.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-lg-2 my-2">
+                    <label for="">Year</label>
+                    <select class="form-control-inline" name="year" id="year" ng-model="selectedYear">
+                        <option selected value=2019>2019</option>
+                        <option value=2018>2018</option>
+                        <option value=2017>2017</option>
+                    </select>
+                </div>
+                <div class="form-group col-lg-2 my-2">
+                    <label for="">Month</label>
+                    <select class="form-control-inline" name="month" id="month" ng-model=selectedMonth>
+                        <option ng-repeat="month in months" ng-selected="month === 'March'" value={{month}}>{{month}}</option>
+        
+                    </select>
+        
+                </div>
+                <div class="form-group col-lg-2 my-2">
+                    <button type="button" name="btnShow" id="btnShow" class="btn btn-sm align-middle"
+                        ng-click="showBills();">Show!</button>
+        
+                </div>
+        
+                <!-- <input type="month" /> -->
             </div>
-            <div class="form-group col-lg-2">
-                <label for="">Minibar Side</label>
-            </div>
-            <div class="form-group col-lg-2">
-                <label for="">Hotel side</label>
-            </div>
-        </li>
-        <li class="row" ng-repeat="dayBilling in billingInfo">
-
-            <div class="form-group col-lg-2">
-                <!-- <input type=" date" placeholder="yyyy-MM-dd" value="{{dayBilling.date.format('YYYY-MM-DD')}}" /> -->
-                {{dayBilling.billdate.format("DD/MM/YYYY")}}
-            </div>
-            <div class="form-group col-lg-2">
-                <input type=" text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
-                    ng-model="dayBilling.ourside" ng-change="changeStatus(dayBilling)">
-                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
-            </div>
-            <div class="form-group col-lg-2">
-                <input type=" text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
-                    ng-model="dayBilling.hotelside" >
-                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
-            </div>
-            <div class="form-group col-lg-2">
-                <small id="status{{$index}}" class="form-text text-muted align-middle" ng-show="dayBilling.status">{{dayBilling.status}}</small>
-            </div>
-        </li>
-        <li>
-            <button type="button" class="btn btn-primary" ng-click="add();">Add</button>
-            <button type="button" class="btn btn-primary" ng-show = "needSave()" ng-click="save();">Save</button>
-        </li>
-    </ul>
-
+            <!--row-->
+            <!-- <div class="row"> -->
+            <ul ng-show="selectedHotelId">
+                <li class="row">
+                    <div class="form-group col-lg-2">
+                        <label for="">Date</label>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="">Minibar Side</label>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="">Hotel side</label>
+                    </div>
+                </li>
+                <li class="row" ng-repeat="dayBilling in billingInfo">
+        
+                    <div class="form-group col-lg-2">
+                        <!-- <input type=" date" placeholder="yyyy-MM-dd" value="{{dayBilling.date.format('YYYY-MM-DD')}}" /> -->
+                        {{dayBilling.billdate.format("DD/MM/YYYY")}}
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <input type=" text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
+                            ng-model="dayBilling.ourside" ng-change="changeStatus(dayBilling)">
+                        <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <input type=" text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
+                            ng-model="dayBilling.hotelside" >
+                        <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <small id="status{{$index}}" class="form-text text-muted align-middle" ng-show="dayBilling.status">{{dayBilling.status}}</small>
+                    </div>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-primary" ng-click="add();">Add</button>
+                    <button type="button" class="btn btn-primary" ng-show = "needSave()" ng-click="save();">Save</button>
+                </li>
+            </ul>
+            
+        <!-- </div>
+    </uib-accordion> -->
+    
 
 
     <!-- </div> -->

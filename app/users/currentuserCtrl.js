@@ -1,11 +1,13 @@
 //import moment = require("moment");
 
-app.controller("currentuserCtrl", function ($scope, hotelsSrv, $location, $log, $routeParams) {
+app.controller("currentuserCtrl", function ($scope, hotelsSrv, userSrv,$location, $log, $routeParams) {
     $scope.selectedhotelId = "";
     var id = $routeParams["id"];
     if (id !== 'undefined') {
         $scope.userId = id;
     }
+    $scope.activeUser = userSrv.getActiveUser();
+    $scope.activeUser=$scope.activeUser?$scope.activeUser:"undefine";
     var hotelsList = [];
     var hotelsByUserIdList = [];
     $scope.months = moment.months()
@@ -17,6 +19,7 @@ app.controller("currentuserCtrl", function ($scope, hotelsSrv, $location, $log, 
         hotelsByUserIdList = hotelsByUserId;
         hotelsSrv.getHotels().then(function (hotels) {
             hotelsList = hotels;
+            $scope.hotels = []
             $scope.hotels = hotelsList.filter((el) => {
                 for (var i = 0; i < hotelsByUserIdList.length; i++) {
                     if (hotelsByUserId[i].hotelId === el.id)

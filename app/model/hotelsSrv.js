@@ -44,16 +44,22 @@ app.factory("hotelsSrv", function ($http, $q, $log, userSrv) {
 
     function getHotels() {
         var async = $q.defer();
-        $http.get("app/model/data/hotels.json").then((response) => {
-            jesonData = response.data;
-            for (var i = 0; i < jesonData.length; i++) {
-                hotels.push(new Hotel(jesonData[i]))
-            }
-            async.resolve(hotels);
-        }, (error) => {
-            $log.error("Error with HotelsUsers: " + error);
-            async.reject(error);
-        });
+        if (hotels.length>0){
+            async.resolve(hotels)
+        }else{
+            $http.get("app/model/data/hotels.json").then((response) => {
+                jesonData = response.data;
+                hotels = [];
+                for (var i = 0; i < jesonData.length; i++) {
+                    hotels.push(new Hotel(jesonData[i]))
+                }
+                async.resolve(hotels);
+            }, (error) => {
+                $log.error("Error with HotelsUsers: " + error);
+                async.reject(error);
+            });
+        }
+        
         // async.resolve(hotels.filter((hotel) => {
         //     return hu.map((huItem) => { huItem.hotelId === hotel.Id && huItem.userId === id })
        return async.promise;
