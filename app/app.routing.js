@@ -4,6 +4,8 @@ app.config(function($routeProvider){
     }).when('/login',{
         templateUrl: "app/login/login.html",
         controller: "loginCtrl"
+    }).when("/loginModal",{
+        templateUrl: "app/login/loginModal.html"
     }).when('/users',{
         templateUrl: "users.html",
         controller: "usersCtrl"
