@@ -36,7 +36,11 @@ app.controller("currentuserCtrl", function ($scope, hotelsSrv, userSrv,$location
         $log.error(err);
     });
     
-      
+   $scope.MytoggleOpen=function()   
+   {
+       console.log("Try to a litle change accordion group directive");
+       toggleOpen();
+   };
 
    $scope.OnChange = function(){
       hotelParamSrv.hotelParam=$scope.hotelParam;

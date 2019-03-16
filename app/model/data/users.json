@@ -1,28 +1,28 @@
 [
     {
         "id":1,
-        "name":"Gideon Golan",
+        "username":"Gideon Golan",
         "email":"gidi.golan.bestbar@gmail.com",
         "password":"m123",
         "role": 1
     },
     {
         "id":2,
-        "name":"Yan Stolarov",
+        "username":"Yan Stolarov",
         "email":"yan.stolyarov.bestbar@gmail.com",
         "password":"t123",
         "role": 2
     },
     {
         "id":3,
-        "name":"Ruslan",
+        "username":"Ruslan",
         "email":"ruslan.bestbar@gmail.com",
         "password":"u123",
         "role":3
     },
     {
         "id":4,
-        "name":"Igor Polonskiy",
+        "username":"Igor Polonskiy",
         "email":"igor.polonskiy.bestbar@gmail.com",
         "password":"u123",
         "role": 3

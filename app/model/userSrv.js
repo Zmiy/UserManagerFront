@@ -4,7 +4,7 @@ app.factory("userSrv", function($http, $q, $log) {
 
     function User(plainUser) {
         this.id = plainUser.id;
-        this.name = plainUser.name;
+        this.name = plainUser.username;
         this.email = plainUser.email;
         this.role = plainUser.role;
     }
@@ -29,7 +29,7 @@ app.factory("userSrv", function($http, $q, $log) {
         }, function(error) {
             $log.error(error);
             async.reject(error);
-        })
+        });
 
         return async.promise;
     }
@@ -51,6 +51,6 @@ app.factory("userSrv", function($http, $q, $log) {
         isLoggedIn: isLoggedIn,
         logout: logout,
         getActiveUser: getActiveUser
-    }
+    };
 
 });

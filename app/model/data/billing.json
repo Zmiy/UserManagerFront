@@ -2,69 +2,69 @@
 	{
 		"hotelId":1,
 		"date" :"2019-02-20",
-		"homibills":3800,
-		"hotellbills":3800
+		"homibill":3800,
+		"hotelbill":3800
 	},	
 	{
 		"hotelId":1,
 		"date" :"2019-03-01",
-		"homibills":2780.98,
-		"hotellbills":2780.98
+		"homibill":2780.98,
+		"hotelbill":2780.98
 	},	
 
 	{
 		"hotelId":2,
 		"date" :"2019-03-01",
-		"homibills":100,
-		"hotellbills":100
+		"homibill":100,
+		"hotelbill":100
 	},	
 	{
 		"hotelId":3,
 		"date" :"2019-03-01",
-		"homibills": 200,
-		"hotellbills": 200
+		"homibill": 200,
+		"hotelbill": 200
 	},	
 	{
 		"hotelId":3,
 		"date" :"2019-03-01",
-		"homibills":300,
-		"hotellbills":300
+		"homibill":300,
+		"hotelbill":300
 	},	
 	{
 		"hotelId":1,
 		"date" :"2019-03-02",
-		"homibills":100,
-		"hotellbills":100
+		"homibill":100,
+		"hotelbill":100
 	},	
 	{
 		"hotelId":1,
 		"date" :"2019-03-03",
-		"homibills":1000,
-		"hotellbills":1000
+		"homibill":1000,
+		"hotelbill":1000
 	},	
 	{
 		"hotelId":3,
 		"date" :"2019-03-02",
-		"homibills":100,
-		"hotellbills":100
+		"homibill":100,
+		"hotelbill":100
 	},	
 	{
 		"hotelId":1,
 		"date" :"2019-03-04",
-		"homibills":400.15,
-		"hotellbills":400.15
+		"homibill":400.15,
+		"hotelbill":400.15
 	},	
 	{
 		"hotelId":1,
 		"date" :"2019-03-05",
-		"homibills":100,
-		"hotellbills": 100
+		"homibill":100,
+		"hotelbill": 100
 	},	
 	{
 		"hotelId":1,
 		"date" :"2019-03-06",
-		"homibills":2000,
-		"hotellbills":2000
+		"homibill":2000,
+		"hotelbill":2000
 	}
 
 ]

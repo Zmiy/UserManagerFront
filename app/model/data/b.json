@@ -1,0 +1,70 @@
+[
+	{
+		"hotelId":1,
+		"date" :2019-02-20,
+		"homibills":3800,
+		"hotellbills":3800
+	},	
+	{
+		"hotelId":1,
+		"date" :2019-03-01,
+		"homibills":2780.98,
+		"hotellbills":2780.98
+	},	
+
+	{
+		"hotelId":2,
+		"date" :2019-03-01,
+		"homibills":100,
+		"hotellbills":100
+	},	
+	{
+		"hotelId":3,
+		"date" :2019-03-01,
+		"homibills": 200,
+		"hotellbills": 200
+	},	
+	{
+		"hotelId":3,
+		"date" :2019-03-01,
+		"homibills":300,
+		"hotellbills":300
+	},	
+	{
+		"hotelId":1,
+		"date" :2019-03-02,
+		"homibills":100,
+		"hotellbills":100
+	},	
+	{
+		"hotelId":1,
+		"date" :2019-03-03,
+		"homibills":1000,
+		"hotellbills":1000
+	},	
+	{
+		"hotelId":3,
+		"date" :2019-03-02,
+		"homibills":100,
+		"hotellbills":100
+	},	
+	{
+		"hotelId":1,
+		"date" :2019-03-04,
+		"homibills":400.15,
+		"hotellbills":400.15
+	},	
+	{
+		"hotelId":1,
+		"date" :2019-03-05,
+		"homibills":100,
+		"hotellbills": 100
+	},	
+	{
+		"hotelId":1,
+		"date" :2019-03-06,
+		"homibills":2000,
+		"hotellbills":2000
+	}
+
+]

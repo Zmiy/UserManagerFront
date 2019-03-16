@@ -2,25 +2,6 @@ app.controller('ModalLoginCtrl', function ($uibModal, $log, $document, $location
     var $ctrl = this;
 
     $ctrl.invalidLogin = false;
-
-
-
-    $ctrl.login = function() {
-        //ModalInstanceCtrl.ok();
-        userSrv.login($scope.email, $scope.pwd).then(function(activeUser) {
-            if (activeUser.role === 3)
-            {
-                $location.path("currentuser/"+ activeUser.id);
-            }
-            //$location.path("/user/"+ activeUser.role);
-        }, function() {
-            $scope.invalidLogin = true;
-        });
-        $ctrl.ok();
-    };
-
-
-
     $ctrl.items = ['item1', 'item2', 'item3'];
   
     $ctrl.animationsEnabled = true;

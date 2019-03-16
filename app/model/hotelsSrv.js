@@ -11,8 +11,8 @@ app.factory("hotelsSrv", function ($http, $q, $log, userSrv) {
 
     function Billing(parseBilling)
     {
-        this.ourside = parseBilling.homibills;
-        this.hotelside = parseBilling.hotellbills;
+        this.ourside = parseBilling.homibill;
+        this.hotelside = parseBilling.hotelbill;
         this.billdate = moment(parseBilling.date);  
         this.status=parseBilling.status?parseBilling.status:"";
     }

@@ -27,9 +27,13 @@ app.controller("hoteBillingCtrl", function ($scope, hotelsSrv, userSrv, $log, ho
     };
 
     $scope.needSave = function () {
-        return $scope.billingInfo.some(function (el) { return el.status !== ""; });
-    };
+        hotelParamSrv.needSave = $scope.billingInfo.some(function (el) { return el.status !== ""; });
+        return hotelParamSrv.needSave; //$scope.billingInfo.some(function (el) { return el.status !== ""; });
 
+    };
+    $scope.$watch ($scope.$parent.status.billingOpen, function(){
+        console.log($scope.$parent.status.billingOpen);
+    });
     $scope.OnChange = function () {
         hotelParamSrv.hotelParam = $scope.hotelParam;
     };

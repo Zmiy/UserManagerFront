@@ -17,7 +17,7 @@ app.controller("loginCtrl", function($scope, $location, userSrv) {
         }, function() {
             $scope.invalidLogin = true;
         });
-
+        $scope.$parent.$ctrl.ok();
     };
 
 });
