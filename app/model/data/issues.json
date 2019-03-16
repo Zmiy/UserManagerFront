@@ -1,0 +1,59 @@
+[
+    {
+        "hotelId" : 1,
+        "date" : "2019-02-15",  
+        "roomN" : "208",
+        "issues" : "somthing dont work",
+        "isSolved" : false
+        
+    },
+    {
+        "hotelId" : 3,
+        "date" : "2019-01-20",  
+        "roomN" : "310",
+        "issues" : "somthing dont work",
+        "isSolved" : false
+    },
+    {
+        "hotelId" : 1,
+        "date" : "2019-02-20",  
+        "roomN" : "215",
+        "issues" : "somthing dont work",
+        "isSolved" : false
+    },
+    {
+        "hotelId" : 1,
+        "date" : "2018-12-31",  
+        "roomN" : "224",
+        "issues" : "somthing dont work",
+        "isSolved" : false
+    },
+    {
+        "hotelId" : 1,
+        "date" : "2018-12-15",  
+        "roomN" : "40",
+        "issues" : "somthing dont work",
+        "isSolved" : true,
+        "solvedDate" : "2019-01-10",
+        "techId": 2
+     },
+    {
+        "hotelId" : 1,
+        "date" : "2019-01-01",  
+        "roomN" : "100",
+        "issues" : "somthing dont work",
+        "isSolved" : true,
+        "solvedDate" : "2019-01-10",
+        "techId": 2
+        
+    },
+    {
+        "hotelId" : 1,
+        "date" : "2018-12-12",  
+        "roomN" : "1811",
+        "issues" : "somthing dont work",
+        "isSolved" : true,
+        "solvedDate" : "2019-01-10",
+        "techId": 2
+    }
+]

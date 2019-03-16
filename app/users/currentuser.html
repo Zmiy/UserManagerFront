@@ -1,4 +1,21 @@
 <usermanagment-navbar></usermanagment-navbar>
+<script type="text/ng-template" id="group-template.html">
+    <div class="card-header">
+      <h4 class="card-title" style="color:#fa39c3">
+        <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+          <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
+            {{heading}}
+          </span>
+        </a>
+      </h4>
+    </div>
+    <div class="card-collapse collapse" uib-collapse="!isOpen">
+      <div class="card-body" ng-transclude>
+          <issues-list></issues-list>
+      </div>
+    </div>
+  </script>
+
 <div class="container">
     <h1>User:{{activeUser?activeUser.name:"undefine"}}</h1>
     <div class="row">
@@ -10,16 +27,16 @@
         </div>
         <div class="form-group col-lg-2 my-2">
             <label for="">Year</label>
-            <select class="form-control-inline" name="year" id="year" ng-model="hotelParam.year" ng-change="OnChange();>
-                <option selected value=2019>2019</option>
+            <select class="form-control-inline" name="year" id="year" ng-model="hotelParam.year" ng-change="OnChange();">
+                <option value=2019>2019</option>
                 <option value=2018>2018</option>
                 <option value=2017>2017</option>
             </select>
         </div>
         <div class="form-group col-lg-2 my-2">
             <label for="">Month</label>
-            <select class="form-control-inline" name="month" id="month" ng-model="hotelParam.month" ng-change="OnChange();>
-                <option ng-repeat="month in months" ng-selected="month === 'March'" value={{month}}>{{month}}</option>
+            <select class="form-control-inline" name="month" id="month" ng-model="hotelParam.month" ng-change="OnChange();">
+                <option ng-repeat="month in months"  value={{month}}>{{month}}</option>
 
             </select>
 
@@ -33,54 +50,12 @@
     </div>
     <!--row-->
     <!-- <div class="row"> -->
-    <uib-accordion>
-        <div uib-accordion-group class="mt-1" heading="Billing info" is-disabled = "selectedHotelId" ng-click="showBills()">
-
-            <ul ng-show="selectedHotelId">
-                <li class="row">
-                    <div class="form-group col-lg-2">
-                        <label for="">Date</label>
-                    </div>
-                    <div class="form-group col-lg-2">
-                        <label for="">Minibar Side</label>
-                    </div>
-                    <div class="form-group col-lg-2">
-                        <label for="">Hotel side</label>
-                    </div>
-                </li>
-                <li class="row" ng-repeat="dayBilling in billingInfo">
-
-                    <div class="form-group col-lg-2">
-                        <!-- <input type=" date" placeholder="yyyy-MM-dd" value="{{dayBilling.date.format('YYYY-MM-DD')}}" /> -->
-                        {{dayBilling.billdate.format("DD/MM/YYYY")}}
-                    </div>
-                    <div class="form-group col-lg-2">
-                        <input type=" text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
-                            ng-model="dayBilling.ourside" ng-change="changeStatus(dayBilling)">
-                        <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
-                    </div>
-                    <div class="form-group col-lg-2">
-                        <input type=" text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
-                            ng-model="dayBilling.hotelside">
-                        <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
-                    </div>
-                    <div class="form-group col-lg-2">
-                        <small id="status{{$index}}" class="form-text text-muted align-middle"
-                            ng-show="dayBilling.status">{{dayBilling.status}}</small>
-                    </div>
-                </li>
-                <li>
-                    <button type="button" class="btn btn-primary" ng-click="add();">Add</button>
-                    <button type="button" class="btn btn-primary" ng-show="needSave()" ng-click="save();">Save</button>
-                </li>
-            </ul>
-
+    <uib-accordion ng-if="hotelParam.hotelId">
+        <div uib-accordion-group class="mt-1" heading="Billing info"  is-open="status.billingOpen" >
+            <billings-list ng-if="status.billingOpen"></billings-list>
         </div>
-    </uib-accordion>
-    <uib-accordion>
-        <div uib-accordion-group class="mt-1" heading="Issues list" >
-                
-
+        <div uib-accordion-group class="mt-1" heading="Issues list" is-open="status.isuesOpen">
+            <issues-list ng-if="status.isuesOpen"></issues-list>
         </div>
     </uib-accordion>
 
