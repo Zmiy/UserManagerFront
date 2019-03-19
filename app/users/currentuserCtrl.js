@@ -1,37 +1,27 @@
 //import moment = require("moment");
 
-app.controller("currentuserCtrl", function ($scope, hotelsSrv, userSrv,$location, $log, $routeParams, hotelParamSrv) {
+app.controller("currentuserCtrl", function ($scope, hotelsSrv, hotelsParseSrv, userParseSrv,$location, $log, $routeParams, hotelParamSrv) {
     $scope.hotelParam = {};
     $scope.hotelParam.hotelId = "";
+    $scope.hotelParam.hotel = {};
+    
     var id = $routeParams.id;
     if (id !== 'undefined') {
         $scope.userId = id;
     }
-    $scope.activeUser = userSrv.getActiveUser();
+    $scope.activeUser = userParseSrv.getActiveUser();
     $scope.activeUser=$scope.activeUser?$scope.activeUser:"undefine";
     var hotelsList = [];
     var hotelsByUserIdList = [];
     $scope.months = moment.months();
     
-    $scope.hotelParam.month = moment().format("MMMM","en");
-    $scope.hotelParam.year = moment().format("YYYY","en");
+    $scope.hotelParam.month = moment().get('month');//moment().format("MMMM","en");
+    $scope.hotelParam.year = moment().get('year');//moment().format("YYYY","en");
 
-    hotelsSrv.getHotelsByUser($scope.userId).then(function (hotelsByUserId) {
-        hotelsByUserIdList = hotelsByUserId;
-        hotelsSrv.getHotels().then(function (hotels) {
-            hotelsList = hotels;
-            $scope.hotels = [];
-            $scope.hotels = hotelsList.filter(function(el) {
-                for (var i = 0; i < hotelsByUserIdList.length; i++) {
-                    if (hotelsByUserId[i].hotelId === el.id)
-                        return true;
-                }
-
-            });
-        }, function(err) {
-            $log.error(err);
-        });
-
+    hotelsParseSrv.getHotelsByUser($scope.userId).then(function (hotelsByUserId) {
+        $scope.hotels = [];
+        $scope.hotels = hotelsByUserId;
+        
     }, function(err)  {
         $log.error(err);
     });

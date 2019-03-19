@@ -1,10 +1,11 @@
-
-app.controller("hoteBillingCtrl", function ($scope, hotelsSrv, userSrv, $log, hotelParamSrv) {
+app.controller("hoteBillingCtrl", function ($scope, hotelsSrv, hotelsParseSrv, userSrv, $log, hotelParamSrv) {
     var hotelParam = hotelParamSrv.hotelParam;
     $scope.billingInfo = [];
-
-
-    hotelsSrv.getBillingInfoByHotelId(parseInt(hotelParam.hotelId), hotelParam.year, hotelParam.month).then(function (billingInfo) {
+    $scope.saved = false;
+    $scope.reloadOn = false;
+    //hotelsSrv.getBillingInfoByHotelId(parseInt(hotelParam.hotelId), hotelParam.year, hotelParam.month).then
+    hotelsParseSrv.getBillingInfoByHotelId(hotelParam.hotelObj, hotelParam.year, hotelParam.month).then
+    (function (billingInfo) {
         $scope.billingInfo = billingInfo;
     }, function (err) {
         $log.error(err);
@@ -12,7 +13,7 @@ app.controller("hoteBillingCtrl", function ($scope, hotelsSrv, userSrv, $log, ho
 
     $scope.add = function () {
         var newDate = $scope.billingInfo[$scope.billingInfo.length - 1].billdate.clone().add(1, "d").format("YYYY-MM-DD");
-        $scope.billingInfo.push(hotelsSrv.getNewBilling(newDate,"New"));
+        $scope.billingInfo.push(hotelsParseSrv.getNewBilling(newDate,"New"));
         // $scope.billingInfo.push(
         //     { "billdate": newDate, "hotelId": $scope.hotelParam.hotelId, "homibilling": 0, "hotelbilling": 0, "status": "New" }
         // );
@@ -20,21 +21,54 @@ app.controller("hoteBillingCtrl", function ($scope, hotelsSrv, userSrv, $log, ho
         //console.log("new date:" + newDate.format("LLL"));
     };
 
+    $scope.save = function(){
+        var newBill = $scope.billingInfo.filter(function(el){return el.status==="New";});
+        
+        newBill.forEach(function(el){
+            hotelsParseSrv.saveNewBilling(el,hotelParam.hotelObj).then(function(result){
+                el.id=result.id;
+                el.status="";
+            },function(err){
+                $log.error(err);
+            });
+            
+        });
+        var updateBill = $scope.billingInfo.filter(function(el){return el.status==="*";});
+        updateBill.forEach(function(el){
+            var result = hotelsParseSrv.updateBilling(el,hotelParam.hotelObj);
+            if (result)
+            {
+                el.status="";
+            }
+        });
+        // $scope.saved = true;
+        // $scope.reloadOn = true;
+    };
+    
     $scope.changeStatus = function (dayBilling) {
         if (dayBilling.status === "") {
             dayBilling.status = "*";
         }
     };
 
+    
+    // $scope.$watch ($scope.$parent.status.billingOpen, function(){
+    //     console.log($scope.$parent.status.billingOpen);
+    // });
+    $scope.$watch('reloadOn', function(newVal, oldVal) {
+        //  all directive code here
+        if (newVal ==="true"){
+            $route.reload();
+            console.log("Reloaded successfully......" + $scope.reloadOn);
+        }
+        //console.log("Reloaded successfully......" + $scope.reloadOn);
+    });
+    $scope.OnChange = function () {
+        hotelParamSrv.hotelParam = $scope.hotelParam;
+    };
     $scope.needSave = function () {
         hotelParamSrv.needSave = $scope.billingInfo.some(function (el) { return el.status !== ""; });
         return hotelParamSrv.needSave; //$scope.billingInfo.some(function (el) { return el.status !== ""; });
 
-    };
-    $scope.$watch ($scope.$parent.status.billingOpen, function(){
-        console.log($scope.$parent.status.billingOpen);
-    });
-    $scope.OnChange = function () {
-        hotelParamSrv.hotelParam = $scope.hotelParam;
     };
 });

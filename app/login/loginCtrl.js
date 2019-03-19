@@ -1,4 +1,4 @@
-app.controller("loginCtrl", function($scope, $location, userSrv) {
+app.controller("loginCtrl", function($scope, $location, userParseSrv) {
 
     $scope.invalidLogin = false;
 //    $scope.email = "nir@nir.com";
@@ -8,7 +8,7 @@ app.controller("loginCtrl", function($scope, $location, userSrv) {
 
     $scope.login = function() {
         
-        userSrv.login($scope.email, $scope.pwd).then(function(activeUser) {
+        userParseSrv.login($scope.email, $scope.pwd).then(function(activeUser) {
             if (activeUser.role === 3)
             {
                 $location.path("currentuser/"+ activeUser.id);
@@ -17,7 +17,7 @@ app.controller("loginCtrl", function($scope, $location, userSrv) {
         }, function() {
             $scope.invalidLogin = true;
         });
-        $scope.$parent.$ctrl.ok();
+        //$scope.$parent.$ctrl.ok();
     };
 
 });
