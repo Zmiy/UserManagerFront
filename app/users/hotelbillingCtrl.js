@@ -1,15 +1,20 @@
-app.controller("hoteBillingCtrl", function ($scope, hotelsSrv, hotelsParseSrv, userSrv, $log, hotelParamSrv) {
-    var hotelParam = hotelParamSrv.hotelParam;
-    $scope.billingInfo = [];
-    $scope.saved = false;
-    $scope.reloadOn = false;
-    //hotelsSrv.getBillingInfoByHotelId(parseInt(hotelParam.hotelId), hotelParam.year, hotelParam.month).then
-    hotelsParseSrv.getBillingInfoByHotelId(hotelParam.hotelObj, hotelParam.year, hotelParam.month).then
-    (function (billingInfo) {
-        $scope.billingInfo = billingInfo;
-    }, function (err) {
-        $log.error(err);
-    });
+app.controller("hoteBillingCtrl", function ($scope, hotelsSrv, hotelsParseSrv, userSrv, $log, $route, hotelParamSrv) {
+    $scope.init=function()
+    {
+        var hotelParam = hotelParamSrv.hotelParam;
+        $scope.billingInfo = [];
+        
+        $scope.needToReload = false;
+        //hotelsSrv.getBillingInfoByHotelId(parseInt(hotelParam.hotelId), hotelParam.year, hotelParam.month).then
+        hotelsParseSrv.getBillingInfoByHotelId(hotelParam.hotelObj, hotelParam.year, hotelParam.month).then
+        (function (billingInfo) {
+            $scope.billingInfo = billingInfo;
+        }, function (err) {
+            $log.error(err);
+        });
+    
+        
+    };
 
     $scope.add = function () {
         var newDate = $scope.billingInfo[$scope.billingInfo.length - 1].billdate.clone().add(1, "d").format("YYYY-MM-DD");
@@ -55,20 +60,33 @@ app.controller("hoteBillingCtrl", function ($scope, hotelsSrv, hotelsParseSrv, u
     // $scope.$watch ($scope.$parent.status.billingOpen, function(){
     //     console.log($scope.$parent.status.billingOpen);
     // });
-    $scope.$watch('reloadOn', function(newVal, oldVal) {
+
+    
+    $scope.$watch('needToReload', function(newVal, oldVal) {
         //  all directive code here
-        if (newVal ==="true"){
-            $route.reload();
+       // $log.info("value of needReload changed!!!");
+        if (newVal){
+            $scope.needToReload=false;           
+            $scope.init(); 
+          
             console.log("Reloaded successfully......" + $scope.reloadOn);
         }
         //console.log("Reloaded successfully......" + $scope.reloadOn);
-    });
+    });      
+
     $scope.OnChange = function () {
         hotelParamSrv.hotelParam = $scope.hotelParam;
     };
+    // $scope.$on('pleaseRestart', function (event, data) {
+    //     $log.info("received refresh request "+data.needRestart);
+    //     $scope.needReload = true;     
+    //   });
+
     $scope.needSave = function () {
         hotelParamSrv.needSave = $scope.billingInfo.some(function (el) { return el.status !== ""; });
         return hotelParamSrv.needSave; //$scope.billingInfo.some(function (el) { return el.status !== ""; });
 
-    };
+    };    
+
+   $scope.init(); 
 });

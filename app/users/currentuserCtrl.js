@@ -4,7 +4,8 @@ app.controller("currentuserCtrl", function ($scope, hotelsSrv, hotelsParseSrv, u
     $scope.hotelParam = {};
     $scope.hotelParam.hotelId = "";
     $scope.hotelParam.hotel = {};
-    
+    $scope.needToReload=false;
+
     var id = $routeParams.id;
     if (id !== 'undefined') {
         $scope.userId = id;
@@ -34,5 +35,10 @@ app.controller("currentuserCtrl", function ($scope, hotelsSrv, hotelsParseSrv, u
 
    $scope.OnChange = function(){
       hotelParamSrv.hotelParam=$scope.hotelParam;
+      $scope.needToReload = true;
+    // //   $scope.$broadcast('pleaseRestart', {
+    // //     needRestart: true
+    //   });
+
    };
 });

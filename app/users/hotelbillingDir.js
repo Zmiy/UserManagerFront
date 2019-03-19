@@ -1,11 +1,18 @@
 app.directive("billingsList", function() {
     return {
         templateUrl: "app/users/hotelbilling.html",
-        restrcit: "E",
+        restrcit: "AE",
         scope: {
-            reloadOn: '='
+                needToReload: '='
         },
-        controller: "hoteBillingCtrl"
+        controller: "hoteBillingCtrl",
+        link: function(scope, element, attrs) {
+            scope.$watch('needToReload', function(val) {
+              console.log(val);
+              scope.init();
+              needToReload=false;
+            });
+         }
         
     };
 });

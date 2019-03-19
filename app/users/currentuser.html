@@ -53,7 +53,7 @@
     <!-- <div class="row"> -->
     <uib-accordion ng-if="hotelParam.hotelObj">
         <div uib-accordion-group class="mt-1" heading="Billing info" is-open="status.billingOpen" >
-            <billings-list ng-if="status.billingOpen" reload-on="saved"></billings-list>
+            <billings-list ng-if="status.billingOpen" need-to-reload="needToReload" hotel="" year="" month=""></billings-list>
         </div>
         <div uib-accordion-group class="mt-1" heading="Issues list" is-open="status.isuesOpen">
             <issues-list ng-if="status.isuesOpen"></issues-list>
