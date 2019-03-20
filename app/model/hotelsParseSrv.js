@@ -1,4 +1,4 @@
-app.factory("hotelsParseSrv", function ($http, $q, $log, userSrv) {
+app.factory("hotelsParseSrv", function ($http, $q, $log) {
     function Hotel(hotel) {
         this.id = hotel.id;
         this.name = hotel.get("name");
@@ -20,13 +20,13 @@ app.factory("hotelsParseSrv", function ($http, $q, $log, userSrv) {
 
     function Issues(parseIssues) {
         this.id = parseIssues.id;
-        this.issuesdate = moment(parseIssues.get(date));
+        this.issuesdate = moment(parseIssues.createdAt);
         this.roomN = parseIssues.get("roomN");
         this.issues = parseIssues.get("issues");
         this.isSolved = parseIssues.get("isSolved");
-        this.techId = parseIssues.techId ? parseIssues.get("techId") : "";
+        this.techId = parseIssues.tech ? parseIssues.get("techId") : "";
         this.solvedDate = parseIssues.solvedDate ? moment(parseIssues.get("solvedDate")) : null;
-        this.status = parseIssues.status ? parseIssues.get("status") : "";
+        this.status = parseIssues.get("status") ? parseIssues.get("status") : "";
     }
 
     var hotelsbyId = {};
@@ -122,24 +122,99 @@ app.factory("hotelsParseSrv", function ($http, $q, $log, userSrv) {
         return async.promise;
     }
 
-    function getIssuesByHotelId(hotelId, year, month) {
+    function getIssuesByHotelId(hotelObj) {
         var async = $q.defer();
-        $http.get("app/model/data/issues.json").then(function (response) {
-            jsonData = response.data;
+        var query = new Parse.Query("issues");
+        //var obj = new billingByHotel();
+        //obj.hotelId = hotelId;
+        var hotelPointer = {
+            "__type": 'Pointer',
+            "className": 'hotels',
+            "objectId": hotelObj.id
+          };
+        query.equalTo("hotelId", hotelPointer);
+        query.ascending("createAt");
+        var role = Parse.User.current().get("role");  
+        if (role === 1)
+        {
+            query.equalsTo("isSolved", false);
+        }
+        query.find().then(function(results){
             var issuesList = [];
-            jsonData.filter(function (element) { return element.hotelId === hotelId; })
-                .forEach(function (el) { issuesList.push(new Issues(el)); });
-            async.resolve(issuesList.filter(function (el) { return !el.isSolved; }));
-        }, function (err) {
-            $log.error("Error with Issues list: " + error);
+            results.forEach(function(el){issuesList.push(new Issues(el));});
+            async.resolve(issuesList);
+            
+        }, function (error) {
+            $log.error("Error while fetching billig info by hotelId " + error);
             async.reject(error);
         });
+        
         return async.promise;
     }
 
     function getNewIssues(status) {
-        return new Issues({ "issuesdate": new Date().toString("yyyy-MM-dd"), "roomN": "", "issues": "", "isSolved": false, "status": status });
+        var issues = Parse.Object.extend('issues');
+        var myNewObject = new issues(); 
+        myNewObject.set('roomN', "");
+        myNewObject.set('issues',"");
+        myNewObject.set('isSolved',false);
+        myNewObject.set('status', status);
+        return  new Issues(myNewObject);
+        //return new Issues({ "issuesdate": new Date().toString("yyyy-MM-dd"), "roomN": "", "issues": "", "isSolved": false, "status": status });
     }
+
+    function saveNewIssue(newObj, hotelObj){
+        var async = $q.defer();
+        var issues = Parse.Object.extend('issues');
+        var myNewObject = new issues();
+        var hotelPointer = {
+            "__type": 'Pointer',
+            "className": 'hotels',
+            "objectId": hotelObj.id
+          };
+
+        myNewObject.set('roomN', newObj.roomN);
+        myNewObject.set('issues', newObj.issues);
+        myNewObject.set('hotelId', hotelPointer);
+        //var dt = newObj.billdate.toISOString();
+        myNewObject.set('isSolved', newObj.isSolved); 
+        myNewObject.save().then(
+            function(result)  {
+               $log.info('issues created', result);
+               async.resolve(result);
+            },
+            function(error) {
+                $log.error('Error while creating issue: ', error);
+                async.reject(error);
+            }
+          );
+          return async.promise;
+    }
+
+    function updateIssue(updatingObj)
+    {
+        var async = $q.defer(); 
+        var issues = Parse.Object.extend('issues');
+        var query = new Parse.Query(issues);
+        // here you put the objectId that you want to update
+        query.get(updatingObj.id).then(function(object){
+           
+          object.set('roomN', updatingObj.roomN);
+          object.set('issues', updatingObj.issues);
+          object.save().then(function(result) {
+            // You can use the "get" method to get the value of an attribute
+            // Ex: response.get("<ATTRIBUTE_NAME>")
+            $log.info('issue updated', result);
+            async.resolve(result);
+          }, function(error) {
+                $log.error('Error while updating issue', error);
+                async.reject(error);
+          });
+          
+        });
+        return async.promise;
+    }
+
     function getNewBilling(nextbilldate, status) {
         const billing = Parse.Object.extend('billing');
         const myNewObject = new billing();
@@ -181,11 +256,12 @@ app.factory("hotelsParseSrv", function ($http, $q, $log, userSrv) {
 
     function updateBilling(updatingObj)
     {
+        var async = $q.defer(); 
         var billing = Parse.Object.extend('billing');
         var query = new Parse.Query(billing);
         // here you put the objectId that you want to update
         query.get(updatingObj.id).then(function(object){
-          var async = $q.defer();  
+           
           object.set('hotelbill', parseFloat(updatingObj.hotelside));
           object.set('homibill', parseFloat(updatingObj.ourside));
           //object.set('hotelId',hotelObj);
@@ -194,14 +270,14 @@ app.factory("hotelsParseSrv", function ($http, $q, $log, userSrv) {
             // Ex: response.get("<ATTRIBUTE_NAME>")
             
             $log.info('billing updated', result);
-            async.resolve(true);
+            async.resolve(result);
           }, function(error) {
                 $log.error('Error while updating billing', error);
                 async.reject(error);
           });
-          return async.promise;
+          
         });
-       
+        return async.promise;
     }
 
 
@@ -213,6 +289,8 @@ app.factory("hotelsParseSrv", function ($http, $q, $log, userSrv) {
         getNewIssues: getNewIssues,
         getNewBilling: getNewBilling,
         saveNewBilling: saveNewBilling,
-        updateBilling: updateBilling
+        updateBilling: updateBilling,
+        saveNewIssue: saveNewIssue,
+        updateIssue: updateIssue
     };
 });

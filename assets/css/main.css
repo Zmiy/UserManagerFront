@@ -1,0 +1,37 @@
+ul>li.excel{
+    margin-top: 0px;
+    margin-bottom: -16px;
+    /* background-color: grey;
+    border:thin solid black; */
+}
+div.form-group>small{
+    color: white;
+}
+
+.nodisplay{
+    display:none;
+    position:absolute;
+    right:0px;
+    top:0px;
+}
+
+/* ul>li.excel:hover~div#remoteButton>span.nodisplay{
+    color: red;
+    display:block;
+}
+div#remoteButton:hover{
+    color: red;
+    display:block;
+}
+li>div:hover>span>button{
+    color: red;
+    display:block;
+} */
+div#remoteButton>span.nodisplay:hover{
+    color: red;
+    display: block;
+}
+
+div#remoteButton{
+    cursor: pointer;
+}

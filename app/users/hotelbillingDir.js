@@ -9,7 +9,7 @@ app.directive("billingsList", function() {
         link: function(scope, element, attrs) {
             scope.$watch('needToReload', function(val) {
               console.log(val);
-              scope.init();
+              //scope.init();
               needToReload=false;
             });
          }

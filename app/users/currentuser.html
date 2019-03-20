@@ -51,15 +51,19 @@
     </div>
     <!--row-->
     <!-- <div class="row"> -->
-    <uib-accordion ng-if="hotelParam.hotelObj">
-        <div uib-accordion-group class="mt-1" heading="Billing info" is-open="status.billingOpen" >
-            <billings-list ng-if="status.billingOpen" need-to-reload="needToReload" hotel="" year="" month=""></billings-list>
+    <uib-accordion close-others="oneAtATime" ng-if="hotelParam.hotelObj">
+        <div uib-accordion-group class="mt-1 panel-default" heading="Billing" is-open="status[0].open" ng-click="selection($index)" is-open="check($index)">
+            <billings-list ng-if="status[0].open" need-to-reload="needToReload"></billings-list>
         </div>
-        <div uib-accordion-group class="mt-1" heading="Issues list" is-open="status.isuesOpen">
-            <issues-list ng-if="status.isuesOpen"></issues-list>
+        <div uib-accordion-group class="mt-1 panel-default" heading="Issues list" is-open="status[1].open">
+            <issues-list ng-if="status[1].open" ng-click="selection($index)" is-open="check($index)"></issues-list>
         </div>
     </uib-accordion>
-
+    <uib-accordion close-others="oneAtATime">
+            <div uib-accordion-group class="panel-default" ng-click="selection($index)" is-open="check($index)" heading="{{group.title}}" ng-repeat="group in groups">
+              {{group.content}}
+            </div>
+          </uib-accordion>
 
     <!-- </div> -->
     <!--row-->

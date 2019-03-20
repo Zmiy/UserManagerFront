@@ -1,8 +1,7 @@
-app.controller("loginCtrl", function($scope, $location, userParseSrv) {
-
+app.controller("loginCtrl" , function($scope, $location,  userParseSrv, $uibModalInstance) {
     $scope.invalidLogin = false;
 //    $scope.email = "nir@nir.com";
-//    $scope.pwd = "123";
+$scope.pwd = "u123";
 
 
 
@@ -17,7 +16,16 @@ app.controller("loginCtrl", function($scope, $location, userParseSrv) {
         }, function() {
             $scope.invalidLogin = true;
         });
-        //$scope.$parent.$ctrl.ok();
+        //$uibModalInstance.close("Ok");
+        //$scope.$parent.$ModalContentCtrl.ok();
+        $scope.ok();
     };
 
+    $scope.ok = function(){
+      $uibModalInstance.close("Ok");
+    };
+     
+    $scope.cancel = function(){
+      $uibModalInstance.dismiss();
+    };
 });

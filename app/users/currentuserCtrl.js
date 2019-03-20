@@ -5,7 +5,19 @@ app.controller("currentuserCtrl", function ($scope, hotelsSrv, hotelsParseSrv, u
     $scope.hotelParam.hotelId = "";
     $scope.hotelParam.hotel = {};
     $scope.needToReload=false;
+    $scope.status = [{"open":false},{"open":false}]
 
+     /**
+         * Close panel method
+         * @param idx {Number} - Array index
+         */
+        $scope.closePanel = function (idx) {
+            if ($scope.groups[idx].open) {
+                console.log("Closed group with idx: " + idx);
+                $scope.groups[idx].open = false;
+            }
+        };
+       
     var id = $routeParams.id;
     if (id !== 'undefined') {
         $scope.userId = id;
@@ -36,9 +48,25 @@ app.controller("currentuserCtrl", function ($scope, hotelsSrv, hotelsParseSrv, u
    $scope.OnChange = function(){
       hotelParamSrv.hotelParam=$scope.hotelParam;
       $scope.needToReload = true;
-    // //   $scope.$broadcast('pleaseRestart', {
-    // //     needRestart: true
-    //   });
+      $scope.$broadcast('pleaseRestart', {
+        needRestart: true
+      });
 
    };
+   $scope.oneAtATime = true;
+
+   $scope.status = {
+    isCustomHeaderOpen: false,
+    // isFirstOpen: true,
+    isFirstDisabled: false
+  };
+  $scope.userVal = 0;
+  
+  $scope.selection = function(index){
+    $scope.userVal = index;
+  }
+  
+  $scope.check = function(index){
+    return $scope.userVal == index ;
+  }
 });

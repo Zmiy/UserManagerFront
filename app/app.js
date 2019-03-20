@@ -1,6 +1,6 @@
 
 
-var app = angular.module("userManagement",["ngRoute","ui.bootstrap", "ngAnimate", "ngTouch"]);
+var app = angular.module("userManagement",["ngRoute", "ngAnimate", "ngSanitize","ngTouch","ui.bootstrap"]);
 
 app.service("hotelParamSrv", function(){
     this.hotelParam = { };

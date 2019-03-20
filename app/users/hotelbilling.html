@@ -9,8 +9,9 @@
             <div class="form-group col-lg-2">
                 <label for="">Hotel side</label>
             </div>
+            <hr>
         </li>
-        <li class="row" ng-repeat="dayBilling in billingInfo">
+        <li class="row excel" ng-repeat="dayBilling in billingInfo" >
 
             <div class="form-group col-lg-2">
                 <!-- <input type=" date" placeholder="yyyy-MM-dd" value="{{dayBilling.date.format('YYYY-MM-DD')}}" /> -->
@@ -23,7 +24,7 @@
             </div>
             <div class="form-group col-lg-2">
                 <input type=" text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
-                    ng-model="dayBilling.hotelside">
+                    ng-model="dayBilling.hotelside" ng-change="changeStatus(dayBilling)">
                 <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
             </div>
             <div class="form-group col-lg-2">
@@ -31,7 +32,7 @@
                     ng-show="dayBilling.status">{{dayBilling.status}}</small>
             </div>
         </li>
-        <li>
+        <li class="row">
             <button type="button" class="btn btn-primary" ng-click="add();">Add</button>
             <button type="button" class="btn btn-primary" ng-show="needSave()" ng-click="save();">Save</button>
         </li>

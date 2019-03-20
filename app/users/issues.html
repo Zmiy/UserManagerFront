@@ -1,3 +1,16 @@
+<script type="text/ng-template" id="warningModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">&#x26a0; Warning!!!</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <p class="text-center">&#x261d; Are you sure?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
 <ul>
     <li class="row">
         <div class="form-group col-lg-1">
@@ -14,29 +27,36 @@
         </div>
     
     </li>
-    <li class="row" ng-repeat="issue in issuesList">
+    <li class="row excel" ng-repeat="issue in issuesList">
         <div class="form-group col-lg-1">
-            <label>{{$index+1}}</label>
+            <label class="align-middle">{{$index+1}}</label>
         </div>
 
         <div class="form-group col-lg-2">
             <!-- <input type=" date" placeholder="yyyy-MM-dd" value="{{dayBilling.date.format('YYYY-MM-DD')}}" /> -->
-            <label>{{issue.roomN}}</label>
-        </div>
+            <input type=" text" class="form-control" name="roomN" id="roomN" placeholder="Enter room N"
+                    ng-model="issue.roomN" ng-change="changeStatus(issue)">
+            </div>
         <div class="form-group col-lg-2">
-            {{issue.issues}}
+                <input type=" text" class="form-control" name="issues" id="issues" placeholder="Please describe an issues" ng-model="issue.issues" ng-change="changeStatus(issue)">
         </div>
-        <div class="form-group col-lg-2">
+        <!-- <div class="form-group col-lg-2">
             <input type="checkbox" class="form-check-input" name="chkbIsSolved" value="checkedValue"
                 ng-model="issue.isSolved" ng-click="chkbIsFinished_click(todoItem)">
-        </div>
+        </div> -->
         <div class="form-group col-lg-1">
             <small id="status{{$index}}" class="form-text text-muted align-middle"
-                ng-show="dayBilling.status">{{dayBilling.status}}</small>
+                ng-show="issue.status">{{issue.status}}</small>
+        </div>
+        <div class="form-group col-lg-1" id="removeButton">
+            <span class="nodisplay" ng-click="deleteIssue(issues);">&#x2718</span>
+        </div>
+        <div class="form-group col-lg-1" id="removeButton1">
+                <button ng-click="deleteIssue(issue);">&#x2718</button>
         </div>
     </li>
-    <li>
+    <li class="row">
         <button type="button" class="btn btn-primary" ng-click="add();">Add</button>
-        <button type="button" class="btn btn-primary" ng-show="needSave()" ng-click="save();">Save</button>
+        <button type="button" class="btn btn-primary" ng-show="needSave" ng-click="save();">Save</button>
     </li>
 </ul>
