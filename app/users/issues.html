@@ -12,7 +12,7 @@
 </script>
 
 <ul>
-    <li class="row">
+    <li class="row modalParent">
         <div class="form-group col-lg-1">
             <label for="">#</label>
         </div>
@@ -49,10 +49,10 @@
                 ng-show="issue.status">{{issue.status}}</small>
         </div>
         <div class="form-group col-lg-1" id="removeButton">
-            <span class="nodisplay" ng-click="deleteIssue(issues);">&#x2718</span>
+            <span class="nodisplay" ng-click="openModal('sm',issue)">&#x2718</span>
         </div>
         <div class="form-group col-lg-1" id="removeButton1">
-                <button ng-click="deleteIssue(issue);">&#x2718</button>
+                <button ng-click="open('sm',issue, '.modalParent')">&#x2718</button>
         </div>
     </li>
     <li class="row">

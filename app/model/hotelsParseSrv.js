@@ -214,7 +214,22 @@ app.factory("hotelsParseSrv", function ($http, $q, $log) {
         });
         return async.promise;
     }
-
+    function deleteIssue(deletingObj){
+        var async = $q.defer(); 
+        var issue = Parse.Object.extend('issues');
+        var query = new Parse.Query(issue);
+        query.get(deletingObj.id).then(function(object){
+            object.destroy().then(function(response){
+                $log.info('Deleted issue', response);
+            async.resolve(response);
+            },function(error){
+                $log.error('Error while deleting issue', error);
+                async.reject(error);
+            });
+        });
+        return async.promise;
+    }
+    
     function getNewBilling(nextbilldate, status) {
         const billing = Parse.Object.extend('billing');
         const myNewObject = new billing();
@@ -291,6 +306,7 @@ app.factory("hotelsParseSrv", function ($http, $q, $log) {
         saveNewBilling: saveNewBilling,
         updateBilling: updateBilling,
         saveNewIssue: saveNewIssue,
-        updateIssue: updateIssue
+        updateIssue: updateIssue,
+        deleteIssue: deleteIssue
     };
 });

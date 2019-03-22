@@ -1,4 +1,4 @@
-app.controller("issuesCtrl",function($scope, $log, hotelsParseSrv, hotelParamSrv, $uibModal){
+app.controller("issuesCtrl",function($scope, $log, hotelsParseSrv, hotelParamSrv, $uibModal, $document){
     var hotelParam = [];
     $scope.init = function () {
         hotelParam=hotelParamSrv.hotelParam;
@@ -34,6 +34,7 @@ app.controller("issuesCtrl",function($scope, $log, hotelsParseSrv, hotelParamSrv
             hotelsParseSrv.saveNewIssue(el, hotelParam.hotelObj).then(function (result) {
                 el.id = result.id;
                 el.status = "";
+                needSave();
             }, function (err) {
                 $log.error(err);
             });
@@ -44,20 +45,29 @@ app.controller("issuesCtrl",function($scope, $log, hotelsParseSrv, hotelParamSrv
             hotelsParseSrv.updateIssue(el, hotelParam.hotelObj).then(function (result) {
                 if (result.id === el.id) {
                     el.status = "";
+                    needSave();
                 }
             }, function (err) {
                 $log.error(err);
             });
         });
-        needSave();
+        
     };
 
     $scope.deleteIssue=function(issue){
-        $scope.open("sm");
-        if ($scope.result==="Ok"){
+        //if ($scope.result==="Ok"){
             console.log('Warning remove Remove Ok'+ issue.id);
-        }
-        
+            hotelsParseSrv.deleteIssue(issue).then(function(result){
+                if (result.id === issue.id) {
+                    var index = $scope.issuesList.findIndex((el)=> el.id === result.id);
+                    $scope.issuesList.splice(index,1);
+                    //$scope.issuesList=[];
+                }
+            }, function (err) {
+                $log.error(err);
+            });
+        //}
+        $scope.result ="";
     };
 
     $scope.$on('pleaseRestart', function (event, data) {
@@ -71,11 +81,32 @@ app.controller("issuesCtrl",function($scope, $log, hotelsParseSrv, hotelParamSrv
         }
         needSave();
     };
-    $scope.open = function(size,parentSelector) {
+    
+    // $scope.openModal = function (size, issue, parentSelector)
+    // {
+    //     var modalScope = $scope.$new();
+    //     modalScope.issue4delete = issue;
+    //     var modalInstance =  $uibModal.open({
+    //       templateUrl: "app/users/modal.html",
+    //       controller: "issuesCtrl",//"ModalContentCtrl",
+    //       scope: modalScope,
+    // //      appendTo: parentElem,
+    //       size: size,
+    //     });
+        
+    //     modalInstance.result.then(function(response){
+    //         modalScope.result = response; //`${response} button hitted`;
+    //     }, null);
+    //     modalScope.modalInstance = modalInstance;
+    //     modalScope.issuesList=$scope.issuesList;
+    // };
+
+    $scope.open = function(size,issue,parentSelector) {
+        $scope.Issue4delete = issue;
         var parentElem = parentSelector ? 
-        angular.element($document[0].querySelector('.loginModal ' + parentSelector)) : undefined;
+        angular.element($document[0].querySelector( parentSelector)) : undefined;
         var modalInstance =  $uibModal.open({
-          templateUrl: "warningModalContent.html",
+          templateUrl: "app/users/modal.html",
           controller: "ModalContentCtrl",
           appendTo: parentElem,
           size: size,
@@ -83,9 +114,33 @@ app.controller("issuesCtrl",function($scope, $log, hotelsParseSrv, hotelParamSrv
         
         modalInstance.result.then(function(response){
             $scope.result = response; //`${response} button hitted`;
+            if ($scope.result==="Ok"){
+                $scope.deleteIssue(issue||$scope.Issue4delete);
+                
+            } 
+        },function(){
+            $log.info('1modal-component dismissed at: ' + new Date());
+            
+        },function(){
+            $log.info('2modal-component dismissed at: ' + new Date());
         });
         
       };
+    // $scope.cancel = function () {
+    //     $scope.modalInstance.dismiss('cancel');
+    // };
+    // $scope.ok = function (issue) {
+    //     $scope.modalInstance.close('Ok');
+    //     $scope.deleteIssue(issue||$scope.issue4delete);
+    // };
+    //   $scope.ok = function(){
+    //     $uibModalInstance.close("Ok");
+    //   };
+       
+    //   $scope.cancel = function(){
+    //     $uibModalInstance.dismiss();
+    //   };
+  
     $scope.init();
 });
 
