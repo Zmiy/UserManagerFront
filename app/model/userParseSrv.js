@@ -1,4 +1,4 @@
-app.factory("userParseSrv", function ($http, $q, $log) {
+app.factory("userParseSrv", function ($q, $log) {
 
     var activeUser = null;
 
@@ -11,8 +11,6 @@ app.factory("userParseSrv", function ($http, $q, $log) {
 
     function login(email, pwd) {
         var async = $q.defer();
-
-
         // Pass the username and password to logIn function
         Parse.User.logIn(email, pwd).then(function(user) {
             // Do stuff after successful login

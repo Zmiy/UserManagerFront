@@ -4,6 +4,11 @@ app.controller("navbarCtrl", function($scope, userParseSrv, $location, $uibModal
         return userParseSrv.isLoggedIn();
     };
 
+    $scope.isAdvancedUser=function(){
+      var user = userParseSrv.getActiveUser();
+      return user.role?(user.role>0 && user.role<3):false;
+    };
+    
     $scope.logout = function() {
         userParseSrv.logout();
         $location.path("/");

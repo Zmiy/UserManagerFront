@@ -1,0 +1,85 @@
+<script type="text/ng-template" id="warningModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">&#x26a0; Warning!!!</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <p class="text-center">&#x261d; Are you sure?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<usermanagment-navbar></usermanagment-navbar>
+<div class="container">
+    <h1>User:{{activeUser.name}}</h1>
+    <div class="row">
+        <!--Start row External-->
+        <div class="col-lg-2 col-md-2">
+            <div class="form-group" >
+                <label for="">Select the hotel</label>
+                <select class="form-control" name="hotel" id="hotel" ng-model="hotelParam.hotelObj" ng-change="cmdbHotels_OnChange()">
+                    <option ng-repeat="hotel in hotelsList" ng-value="hotel.hotelObj">{{hotel.name}}</option>
+                </select>
+                <div class="btn-group-vertical btn-group-sm my-3" ng-show="hotelParam.hotelObj">
+                        <label class="btn btn-secondary mb-0" ng-model="filterBy" uib-btn-radio="'All'">All</label>
+                        <label class="btn btn-secondary mb-0" ng-model="filterBy" uib-btn-radio="'NotResolved'">Not Resolved</label>
+                        <label class="btn btn-secondary mb-0" ng-model="filterBy" uib-btn-radio="'Solved'">Solved</label>
+                    </div>    
+            </div>
+        </div>
+        <div class="col-lg-10 col-md-10">
+            <h1>Technision information from our agents :-)</h1>
+            <div ng-show="!hotelParam.hotelObj">
+                <span> Please select hotel for view actual info</span>
+            </div>
+            <div class="row rightSide col-lg-12 col-md-auto" ng-show="hotelParam.hotelObj">
+                <ul class="col-lg-12 issueInfo">
+                    <li class="row rightSide header modalParent ">
+                        <div class="form-group col-lg-1">
+                            <label class="form-check-label">#</label>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label class="form-check-label">Room N</label>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="form-check-label">Isues</label>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="form-check-label">is Solved at ...</label>
+                        </div>
+                    </li>
+                    <li class="row rightSide body h-s100" ng-repeat="issue in issuesList | filter: filterBySolved">
+                        <div class="form-group col-lg-1 my-auto">
+                            <label class="form-check-label">{{$index+1}}</label>
+                        </div>
+                        <div class="form-group col-lg-2 my-auto">
+                            <input type="text" class="form-control my-auto" name="roomN" id="roomN" placeholder="Enter room N" ng-model="issue.roomN" ng-change="changeStatus(issue)">
+                        </div>
+                        <div class="form-group col-lg-3 my-auto">
+                            <textarea class="form-control my-auto" name="texareaIssue" id="textareaIssue{{$index}}" ng-model="issue.issues" rows="3" ng-change="changeStatus(issue)">{{issue.issue}}</textarea>
+                        </div>
+                        <div class="form-check col-lg-3 my-auto">
+                          <label class="form-check-label" >
+                            <input type="checkbox" class="form-check-input" name="checkbox"  ng-model="issue.isSolved" ng-change="cmbbIsSolved_OnChange(issue)">
+                            {{issue.solvedDate?issue.solvedDate.format("DD/MM/YYYY"):"not resolved"}}
+                          </label>
+                        </div>
+                        <div class="form-group col-lg-1 my-auto">
+                                <small  class="form-text text-muted"
+                                    ng-show="issue.status">{{issue.status}}</small>
+                        </div>
+                        <div class="form-group col-lg-1 remote my-auto" id="removeButton">
+                                <span class="nodisplay" ng-click="openModal('sm',issue,'.header')">&#x2718</span>
+                            </div>
+                    
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--End row Externam -->
+</div>
+<!-- Container -->

@@ -1,6 +1,9 @@
+ul>li div.form-group{
+    margin-bottom: 0px;
+}
 ul>li.excel{
     margin-top: 0px;
-    margin-bottom: -16px;
+    margin-bottom: 0px;
     /* background-color: grey;
     border:thin solid black; */
 }
@@ -14,7 +17,26 @@ div.form-group>small{
     right:0px;
     top:0px;
 }
-
+ul>li{
+    border: thin solid gray;
+}
+.row.rightSide{
+    padding-left: 0px;
+    padding-right: 0px;
+ 
+}
+ul.issueInfo>li.body:hover div.remote>span{
+    color: green;
+    display: block;
+    position:relative;
+    /* top: 25px; */
+    /* bottom: 0px;
+    margin-top: auto;
+    margin-bottom: auto; */
+}
+div.remote>span:hover{
+    cursor: pointer;
+}
 /* ul>li.excel:hover~div#remoteButton>span.nodisplay{
     color: red;
     display:block;

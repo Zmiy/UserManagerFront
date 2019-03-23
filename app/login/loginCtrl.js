@@ -11,6 +11,9 @@ $scope.pwd = "u123";
             if (activeUser.role === 3)
             {
                 $location.path("currentuser/"+ activeUser.id);
+            }else if (activeUser.role===2)
+            {
+                $location.path("currentTech/"+ activeUser.id);
             }
             //$location.path("/user/"+ activeUser.role);
         }, function() {
