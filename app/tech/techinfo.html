@@ -74,8 +74,11 @@
                         <div class="form-group col-lg-1 remote my-auto" id="removeButton">
                                 <span class="nodisplay" ng-click="openModal('sm',issue,'.header')">&#x2718</span>
                             </div>
-                    
-                    </li>
+                     </li>
+                     <li class="row">
+                            <button type="button" class="btn btn-primary" ng-click="add();">Add</button>
+                            <button type="button" class="btn btn-primary" ng-show="needSave" ng-click="save();">Save</button>
+                        </li>
 
                 </ul>
             </div>

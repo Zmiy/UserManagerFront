@@ -1,4 +1,5 @@
 app.controller('techinfoCtrl', function ($scope, $log, $routeParams, hotelsParseSrv, userParseSrv, $document, $uibModal, $window) {
+    
     var id = $routeParams.id;
     if (id !== 'undefined') {
         $scope.userId = id;
@@ -49,6 +50,36 @@ app.controller('techinfoCtrl', function ($scope, $log, $routeParams, hotelsParse
         }, function (err) {
             $log.error(err);
         });
+    };
+    $scope.add=function(){
+        $scope.issuesList.push(hotelsParseSrv.getNewIssues("New"));
+        needSave();
+    };
+
+    $scope.save=function(){
+        var changedIssue = $scope.issuesList.filter(function(el){return el.status === "New";});
+        changedIssue.map(function(el){
+            hotelsParseSrv.saveNewIssue(el, $scope.hotelParam.hotelObj).then(function (result) {
+                el.id = result.id;
+                el.status = "";
+                needSave();
+            }, function (err) {
+                $log.error(err);
+            });
+        });
+        changedIssue = [];
+        changedIssues = $scope.issuesList.filter(function(el){return el.status ==="*";});
+        changedIssues.map(function(el){
+            hotelsParseSrv.updateIssue(el, $scope.hotelParam.hotelObj).then(function (result) {
+                if (result.id === el.id) {
+                    el.status = "";
+                    needSave();
+                }
+            }, function (err) {
+                $log.error(err);
+            });
+        });
+        
     };
 
     $scope.deleteIssue = function (issue) {
