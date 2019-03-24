@@ -1,7 +1,7 @@
 <div class="container mt-1">
     <div id="printArea">
         <div class="modal-header">
-            <h3>{{activeUser?activeUser.name:"undefined"}} {{date|date:"dd/MM/yyyy HH:mm"}}
+            <h3>{{activeUser?activeUser.name:"undefined"}} {{date()|date:"dd/MM/yyyy HH:mm"}}
                 {{hotelParam.hotelObj.get("name")}}</h3>
         </div>
         <div class="modal-body">

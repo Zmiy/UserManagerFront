@@ -4,7 +4,12 @@ app.controller('techinfoCtrl', function ($scope, $log, $routeParams, hotelsParse
     if (id !== 'undefined') {
         $scope.userId = id;
     }
-    $scope.date = new Date();
+    //$scope.date = new Date();
+    $scope.date = function()
+    {
+        return new Date();
+    };
+    
     $scope.activeUser = userParseSrv.getActiveUser();
     
     $scope.hotelsList = [];

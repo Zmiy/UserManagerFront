@@ -15,13 +15,14 @@ $scope.pwd = "t123";
             {
                 $location.path("currentTech/"+ activeUser.id);
             }
+
+            $scope.ok();
             //$location.path("/user/"+ activeUser.role);
         }, function() {
             $scope.invalidLogin = true;
         });
-        //$uibModalInstance.close("Ok");
-        //$scope.$parent.$ModalContentCtrl.ok();
-        $scope.ok();
+        
+       
     };
 
     $scope.ok = function(){
