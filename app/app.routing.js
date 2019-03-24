@@ -15,7 +15,7 @@ app.config(function($routeProvider){
         templateUrl: "app/users/currentuser.html",
         controller: "currentuserCtrl"
     }).when("/currentTech/:id",{
-        templateUrl: "app/tech/techInfo.html",
+        templateUrl: "app/tech/techinfo.html",
         controller: "techinfoCtrl"
     }).otherwise({
         redirectTo: "/"
