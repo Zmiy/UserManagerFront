@@ -1,0 +1,11 @@
+/* #printfooter { 
+        display: none !important; 
+    }  */
+    td{
+        border: 1px solid black !important;
+        font-size: 18px !important;
+        color: green !important;
+    }
+    /* .modal-footer{
+        display:none !important;
+    } */

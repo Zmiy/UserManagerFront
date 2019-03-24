@@ -17,7 +17,7 @@ div.form-group>small{
     right:0px;
     top:0px;
 }
-ul>li{
+ul.issueInfo>li{
     border: thin solid gray;
 }
 .row.rightSide{
@@ -37,6 +37,8 @@ ul.issueInfo>li.body:hover div.remote>span{
 div.remote>span:hover{
     cursor: pointer;
 }
+
+
 /* ul>li.excel:hover~div#remoteButton>span.nodisplay{
     color: red;
     display:block;

@@ -1,9 +1,11 @@
-app.controller('techinfoCtrl', function ($scope, $log, $routeParams, hotelsParseSrv, userParseSrv, $document, $uibModal) {
+app.controller('techinfoCtrl', function ($scope, $log, $routeParams, hotelsParseSrv, userParseSrv, $document, $uibModal, $window) {
     var id = $routeParams.id;
     if (id !== 'undefined') {
         $scope.userId = id;
     }
+    $scope.date = new Date();
     $scope.activeUser = userParseSrv.getActiveUser();
+    
     $scope.hotelsList = [];
     $scope.filterBy = 'NotResolved';
     hotelsParseSrv.getHotels().then(function (result) {
@@ -11,6 +13,7 @@ app.controller('techinfoCtrl', function ($scope, $log, $routeParams, hotelsParse
     }, function (error) {
         $log.error(`Something happened wrong when receiving list of hotels {error}`);
     });
+    
     $scope.changeStatus = function (currentIssue) {
         if (currentIssue.status === "") {
             currentIssue.status = "*";
@@ -83,13 +86,54 @@ app.controller('techinfoCtrl', function ($scope, $log, $routeParams, hotelsParse
         } 
     }
 
+    $scope.printIt = function(){
+        var table = document.getElementById('printArea').innerHTML;
+        var myWindow = $window.open('', '', 'width=800, height=600');
+        myWindow.document.write(table);
+        myWindow.print();
+     };
+
+
+    $scope.openModalPrintPreview=function(){
+        var modalScope = $scope.$new();
+        //modalScope.activeUserName = $scope.activeUser.name;
+        //modalScope.issues = $scope.issuesList;
+
+        var modalInstance = $uibModal.open({
+            // ariaLabelledBy: 'modal-title',
+            // ariaDescribedBy: 'modal-body',
+            templateUrl: "app/tech/printTemplate.html",
+            controller: "ModalContentCtrl",
+            size: "lg",
+            scope: modalScope
+            // resolve: {
+            //     aciveUserName: function () {
+            //       return $ctrl.aciveUserName;
+            //     },
+            //     issues: function(){
+            //         return $scope.issuesList;
+            //     }
+            //   }
+        });
+        modalScope.modalInstance = modalInstance;
+        modalInstance.result.then(function (response) {
+            $scope.result = response; //`${response} button hitted`;
+            $log.info("modal return answer: "+ response);
+        }, function () {
+            $log.info('1modal-component dismissed at: ' + new Date());
+
+        }, function () {
+            $log.info('2modal-component dismissed at: ' + new Date());
+        });
+
+    };
 
     $scope.openModal=function(size, issue, parentSelector)
     {
         open(size, issue, parentSelector);    
-    }
+    };
 
-    open = function (size, issue, parentSelector) {
+    var open = function (size, issue, parentSelector) {
         $scope.Issue4delete = issue;
         var parentElem = parentSelector ?
             angular.element($document[0].querySelector(parentSelector)) : undefined;

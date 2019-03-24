@@ -13,7 +13,7 @@
 
 <usermanagment-navbar></usermanagment-navbar>
 <div class="container">
-    <h1>User:{{activeUser.name}}</h1>
+    <h3>User:{{activeUser.name}} {{date|date:"dd/MM/yyyy hh:mm"}}</h3>
     <div class="row">
         <!--Start row External-->
         <div class="col-lg-2 col-md-2">
@@ -26,7 +26,8 @@
                         <label class="btn btn-secondary mb-0" ng-model="filterBy" uib-btn-radio="'All'">All</label>
                         <label class="btn btn-secondary mb-0" ng-model="filterBy" uib-btn-radio="'NotResolved'">Not Resolved</label>
                         <label class="btn btn-secondary mb-0" ng-model="filterBy" uib-btn-radio="'Solved'">Solved</label>
-                    </div>    
+                </div>    
+                <button type="button" class="btn btn-success my-3" ng-show="hotelParam.hotelObj" ng-click="openModalPrintPreview();">Print preview</button>
             </div>
         </div>
         <div class="col-lg-10 col-md-10">
@@ -35,7 +36,7 @@
                 <span> Please select hotel for view actual info</span>
             </div>
             <div class="row rightSide col-lg-12 col-md-auto" ng-show="hotelParam.hotelObj">
-                <ul class="col-lg-12 issueInfo">
+                <ul class="col-lg-12 issueInfo" id="printArea">
                     <li class="row rightSide header modalParent ">
                         <div class="form-group col-lg-1">
                             <label class="form-check-label">#</label>

@@ -1,7 +1,7 @@
 app.controller("loginCtrl" , function($scope, $location,  userParseSrv, $uibModalInstance) {
     $scope.invalidLogin = false;
-//    $scope.email = "nir@nir.com";
-$scope.pwd = "u123";
+   $scope.email = "yan.stolyarov.bestbar@gmail.com";
+$scope.pwd = "t123";
 
 
 
