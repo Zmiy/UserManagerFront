@@ -4,7 +4,7 @@ app.controller("currentuserCtrl", function ($scope, hotelsSrv, hotelsParseSrv, u
     $scope.hotelParam = {};
     $scope.hotelParam.hotelId = "";
     $scope.hotelParam.hotel = {};
-    $scope.needToReload=false;
+    $scope.Refresh={"refreshBilling":false, "refreshIssues": false};
     $scope.status = [{"open":false},{"open":false}]
 
      /**
@@ -47,19 +47,21 @@ app.controller("currentuserCtrl", function ($scope, hotelsSrv, hotelsParseSrv, u
 
    $scope.OnChange = function(){
       hotelParamSrv.hotelParam=$scope.hotelParam;
-      $scope.needToReload = true;
-      $scope.$broadcast('pleaseRestart', {
-        needRestart: true
-      });
+      if ($scope.status[0].open){
+        $scope.Refresh.refreshBilling = true;
+      }
+      // $scope.$broadcast('pleaseRestart', {
+      //   needRestart: true
+      // });
 
    };
    $scope.oneAtATime = true;
 
-   $scope.status = {
-    isCustomHeaderOpen: false,
-    // isFirstOpen: true,
-    isFirstDisabled: false
-  };
+  //  $scope.status = {
+  //   isCustomHeaderOpen: false,
+  //   // isFirstOpen: true,
+  //   isFirstDisabled: false
+  // };
   $scope.userVal = 0;
   
   $scope.selection = function(index){

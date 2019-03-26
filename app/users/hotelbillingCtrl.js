@@ -6,7 +6,8 @@ app.controller("hoteBillingCtrl", function ($scope, hotelsSrv, hotelsParseSrv, u
 
         $scope.needToReload = false;
         //hotelsSrv.getBillingInfoByHotelId(parseInt(hotelParam.hotelId), hotelParam.year, hotelParam.month).then
-        hotelsParseSrv.getBillingInfoByHotelId(hotelParam.hotelObj, hotelParam.year, hotelParam.month).then
+        //hotelsParseSrv.getBillingInfoByHotelId(hotelParam.hotelObj, hotelParam.year, hotelParam.month).then
+        hotelsParseSrv.getBillingInfoByHotelId($scope.currentHotelObj(), $scope.currentYear(), $scope.currentMonth()).then
             (function (billingInfo) {
                 $scope.billingInfo = billingInfo;
             }, function (err) {
@@ -17,16 +18,11 @@ app.controller("hoteBillingCtrl", function ($scope, hotelsSrv, hotelsParseSrv, u
     $scope.add = function () {
         var newDate = $scope.billingInfo[$scope.billingInfo.length - 1].billdate.clone().add(1, "d").format("YYYY-MM-DD");
         $scope.billingInfo.push(hotelsParseSrv.getNewBilling(newDate, "New"));
-        // $scope.billingInfo.push(
-        //     { "billdate": newDate, "hotelId": $scope.hotelParam.hotelId, "homibilling": 0, "hotelbilling": 0, "status": "New" }
-        // );
-        //$scope.billingInfo.forEach(function (el) { console.log(el.billdate.format("LLL", "he")); });
-        //console.log("new date:" + newDate.format("LLL"));
     };
 
     $scope.save = function () {
         var newBill = $scope.billingInfo.filter(function (el) { return el.status === "New"; });
-
+        $log.info(`current hotel object{$scope.currentHotelObj}, hotel name = {$scope.currentHotelObj.name}`);
         newBill.forEach(function (el) {
             hotelsParseSrv.saveNewBilling(el, hotelParam.hotelObj).then(function (result) {
                 el.id = result.id;
@@ -62,17 +58,17 @@ app.controller("hoteBillingCtrl", function ($scope, hotelsSrv, hotelsParseSrv, u
     // });
 
 
-    $scope.$watch('needToReload', function (newVal, oldVal) {
-        //  all directive code here
-        // $log.info("value of needReload changed!!!");
-        if (newVal) {
-            $scope.needToReload = false;
-            $scope.init();
+    // $scope.$watch('needToReload', function (newVal, oldVal) {
+    //     //  all directive code here
+    //     // $log.info("value of needReload changed!!!");
+    //     if (newVal) {
+    //         $scope.needRefresh = false;
+    //         $scope.init();
 
-            console.log("Reloaded successfully......" + $scope.reloadOn);
-        }
-        //console.log("Reloaded successfully......" + $scope.reloadOn);
-    });
+    //         console.log("Reloaded successfully......" + $scope.reloadOn);
+    //     }
+    //     //console.log("Reloaded successfully......" + $scope.reloadOn);
+    // });
 
     $scope.OnChange = function () {
         hotelParamSrv.hotelParam = $scope.hotelParam;
@@ -80,7 +76,7 @@ app.controller("hoteBillingCtrl", function ($scope, hotelsSrv, hotelsParseSrv, u
     
     $scope.$on('pleaseRestart', function (event, data) {
         $log.info("received refresh request ");
-        $scope.init();
+        //$scope.init();
     });
 
     $scope.needSave = function () {
