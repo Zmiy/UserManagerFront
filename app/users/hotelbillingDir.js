@@ -5,6 +5,7 @@ app.directive("billingsList", function() {
         transclude: 'true',
         scope: {
         needToReload: '=',
+        needSave: '=?', 
 		currentHotelObj: '&',
 		currentMonth: '&',
 		currentYear: '&'
@@ -15,17 +16,13 @@ app.directive("billingsList", function() {
             console.log("need to reload "+ scope.needToReload);
             scope.$watch('needToReload', function(val) {
               //this will return the actual object from the object expression!
-			              
-            console.log("Watch:",attrs.needToReload+" " +attrs.currentMonth, val, scope.needToReload);
-              
+			   
             if  (scope.needToReload){
                   //scope.needToReload=false;
                   scope.init();
               }
             });
-            attrs.$observe('needToReload',function(newVal, oldVal){
-                console.log("observe: "+newVal+" "+ oldVal);
-            });
+            
          }
         
     };

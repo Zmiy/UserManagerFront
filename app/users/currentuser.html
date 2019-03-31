@@ -48,9 +48,12 @@
     <!--row-->
     <!-- <div class="row"> -->
     <uib-accordion close-others="oneAtATime" ng-if="hotelParam.hotelObj">
-        <div uib-accordion-group class="mt-1 panel-default" heading="Billing" is-open="status[0].open">
-          <!-- ng-click="selection($index)" is-open="check($index)" -->
-            <billings-list ng-if="status[0].open" need-to-reload="Refresh.refreshBilling" current-hotel-obj="hotelParam.hotelObj" current-month="hotelParam.month" current-year="hotelParam.year"></billings-list>
+        <div uib-accordion-group class="mt-1 panel-default"  is-open="status[0].open" id="billing" ng-click="$event.preventDefault();event.stopPropagation();toggleOpen($event)" heading="Billing">
+            <!-- <uib-accordion-heading>
+                <span ng-click="foo($event);">Billing </span>
+              </uib-accordion-heading> -->
+          <!-- heading="Billing" ng-click="selection($index)" is-open="check($index)" -->
+            <billings-list ng-if="status[0].open" need-to-reload="Refresh.refreshBilling" current-hotel-obj="hotelParam.hotelObj" current-month="hotelParam.month" current-year="hotelParam.year"  need-save="status[0].needSave"></billings-list>
         </div>
         <div uib-accordion-group class="mt-1 panel-default" heading="Issues list" is-open="status[1].open">
             <issues-list ng-if="status[1].open" ng-click="selection($index)" is-open="check($index)"></issues-list>

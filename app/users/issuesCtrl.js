@@ -62,6 +62,7 @@ app.controller("issuesCtrl",function($scope, $log, hotelsParseSrv, hotelParamSrv
                     var index = $scope.issuesList.findIndex((el)=> el.id === result.id);
                     $scope.issuesList.splice(index,1);
                     //$scope.issuesList=[];
+                    needSave();
                 }
             }, function (err) {
                 $log.error(err);

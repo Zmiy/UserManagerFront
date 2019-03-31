@@ -34,6 +34,11 @@
         </li>
         <li class="row">
             <button type="button" class="btn btn-primary" ng-click="add();">Add</button>
-            <button type="button" class="btn btn-primary" ng-show="needSave()" ng-click="save();">Save</button>
+            <button type="button" class="btn btn-primary" ng-show="needSave" ng-click="save();">Save</button>
+        </li>
+        <li class="row">
+            <div excel-export get-datas="{getdata: getDataForExcel()}" file-name="{{fileName}}" functions="{'getData': getDataForExcel}">
+
+            </div>
         </li>
 </ul>
