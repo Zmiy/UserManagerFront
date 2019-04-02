@@ -102,6 +102,7 @@ app.controller("hoteBillingCtrl", function ($scope, hotelsSrv, hotelsParseSrv, u
         //hotelParamSrv.needSave = $scope.billingInfo.some(function (el) { return el.status !== ""; });
         //return hotelParamSrv.needSave; //$scope.billingInfo.some(function (el) { return el.status !== ""; });
         $scope.needSave = $scope.billingInfo.some(function (el) { return el.status !== ""; });
+        hotelParamSrv.needSave=$scope.needSave;
     };
 
     $scope.init();

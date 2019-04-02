@@ -35,21 +35,30 @@ app.directive('excelExport',function (){
         restrict: 'A',
         scope: {
         	fileName: "@",
-					getDatas: "&",
+					getData: "&",
 					//data: "&exportData",
 					functions: "="
         },
         replace: true,
-        template: '<button class="btn btn-primary btn-ef btn-ef-3 btn-ef-3c mb-10" ng-click="updateData();">Export to Excel </button>',
+        template: '<button class="btn btn-primary btn-ef btn-ef-3 btn-ef-3c mb-10" ng-click="updateData();">Export to Excel <i class="fa fa-download"></i></button>',
         link: function (scope, element, attr) {
 					scope.data = [];
 					
 					scope.updateData=function(){
-						scope.getDatas.getData().then(function(res){
-							data=res;
+						scope.getData().then(function(res){
+							//data=res;
+							var dataObj = [];
+							for (var i=1; i<res.length; i++)
+							{
+								dataObj.push({"date":res[i][0], "our side":res[i][1], "hotel side":res[i][2]});	
+							}
+							// res.forEach(function(el) {
+							// 	dataObj.push({"date":el.billdate._d, "our side":el.ourside, "hotel side":el.hotelside});
+							// });
 							console.log(res);
-							alasql('SELECT * INTO XLSX("john.xlsx",{headers:true}) FROM ?',[scope.data]);
+							alasql('SELECT * INTO XLSX("john.xlsx",{headers:true}) FROM ?',[dataObj]);
 						});
+
 						scope.functions.getData().then(function(res) {
 							scope.data=res;
 							console.log(res);

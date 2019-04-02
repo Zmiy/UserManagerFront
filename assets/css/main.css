@@ -59,3 +59,13 @@ div#remoteButton>span.nodisplay:hover{
 div#remoteButton{
     cursor: pointer;
 }
+
+.modal-dialog {
+    position: absolute;
+    top: 10%;
+    /*half of the modal height*/
+    /* margin-top: -100px; */
+    left: 50%;
+    /*half of the modal width*/
+    margin-left: -180px;
+}
